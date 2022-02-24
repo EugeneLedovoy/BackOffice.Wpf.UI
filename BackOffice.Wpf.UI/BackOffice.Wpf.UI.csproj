@@ -1,0 +1,51 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <OutputType>WinExe</OutputType>
+    <TargetFramework>net5.0-windows</TargetFramework>
+    <UseWPF>true</UseWPF>
+    <ApplicationIcon>Resources\Images\Icons\Adminka2.ico</ApplicationIcon>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Compile Remove="AttachedProperties\**" />
+    <Compile Remove="Converters\**" />
+    <Compile Remove="Helpers\**" />
+    <EmbeddedResource Remove="AttachedProperties\**" />
+    <EmbeddedResource Remove="Converters\**" />
+    <EmbeddedResource Remove="Helpers\**" />
+    <None Remove="AttachedProperties\**" />
+    <None Remove="Converters\**" />
+    <None Remove="Helpers\**" />
+    <Page Remove="AttachedProperties\**" />
+    <Page Remove="Converters\**" />
+    <Page Remove="Helpers\**" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Remove="Resources\Fonts\fontawesome-webfont.ttf" />
+    <None Remove="Resources\Fonts\Segoe mdl2 assets.ttf" />
+    <None Remove="Resources\Images\Icons\Adminka2.ico" />
+    <None Remove="Resources\Images\splash.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Caliburn.Micro" Version="4.0.173" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Wpf.Controls\Wpf.Controls.csproj" />
+    <ProjectReference Include="..\Wpf.Core\Wpf.Core.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="Resources\Fonts\fontawesome-webfont.ttf" />
+    <Resource Include="Resources\Fonts\Segoe mdl2 assets.ttf" />
+    <Resource Include="Resources\Images\Icons\Adminka2.ico" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <SplashScreen Include="Resources\Images\splash.png" />
+  </ItemGroup>
+
+</Project>

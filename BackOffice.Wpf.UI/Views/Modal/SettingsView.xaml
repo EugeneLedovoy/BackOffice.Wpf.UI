@@ -1,0 +1,81 @@
+﻿<UserControl x:Class="MyWpfApp.SettingsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:MyWpfApp"
+        mc:Ignorable="d">
+
+    <UserControl.Resources>
+        <Style TargetType="Button">
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderThickness" Value="0"/>
+            <Setter Property="Opacity" Value="0.7"/>
+            <Setter Property="FontSize" Value="14"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Button">
+                        <Border x:Name="border" CornerRadius="5" BorderThickness="0" BorderBrush="Transparent" RenderTransformOrigin="0.5, 0.5">
+                            <Border.RenderTransform>
+                                <ScaleTransform/>
+                            </Border.RenderTransform>
+
+                            <Viewbox>
+                                <ContentPresenter Content="{TemplateBinding Content}" VerticalAlignment="Center" HorizontalAlignment="Center"/>
+                            </Viewbox>
+                        </Border>
+                        <ControlTemplate.Triggers>
+                            <EventTrigger RoutedEvent="MouseEnter">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="1.2" Duration="0:0:0.15" Storyboard.TargetName="border" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"/>
+                                        <DoubleAnimation To="1.2" Duration="0:0:0.15" Storyboard.TargetName="border" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+
+                            <EventTrigger RoutedEvent="MouseLeave">
+                                <BeginStoryboard>
+                                    <Storyboard>
+                                        <DoubleAnimation To="1" Duration="0:0:0.15" Storyboard.TargetName="border" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleX)"/>
+                                        <DoubleAnimation To="1" Duration="0:0:0.15" Storyboard.TargetName="border" Storyboard.TargetProperty="RenderTransform.(ScaleTransform.ScaleY)"/>
+                                    </Storyboard>
+                                </BeginStoryboard>
+                            </EventTrigger>
+                            
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Opacity" Value="1"/>
+                                <Setter Property="Cursor" Value="Hand"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </UserControl.Resources>
+
+    <Grid Width="300">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <Grid Grid.Row="0">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Text="Settings" HorizontalAlignment="Center" FontSize="16" TextDecorations="Underline"/>
+
+            <Button x:Name="OnCloseClicked" IsCancel="True" Grid.Column="1" Margin=" 0 0 10 0">
+                <TextBlock FontFamily="{StaticResource SegoeMDL2}" FontWeight="UltraLight" FontSize="10" Text="{StaticResource CloseIconSegoeMDL2}"/>
+            </Button>
+        </Grid>
+
+        <StackPanel Grid.Row="1" Orientation="Horizontal" Margin="10">
+            <CheckBox Content="Dark mode" x:Name="IsDarkTheme" FontSize="14" Margin="5" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" Padding="5 0 0 0" Width="Auto"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

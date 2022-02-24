@@ -1,0 +1,145 @@
+﻿<Window x:Class="MyWpfApp.MainView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:core="clr-namespace:Wpf.Core;assembly=Wpf.Core"
+        xmlns:local="clr-namespace:MyWpfApp"
+        mc:Ignorable="d"
+        Title="BackOffice" Height="450" Width="800" 
+        Icon="Resources/Images/Icons/Adminka2.ico"
+        WindowStartupLocation="CenterScreen" WindowStyle="None" AllowsTransparency="True" 
+        SnapsToDevicePixels="True"
+        Activated="OnMainViewActivated" Deactivated="OnMainViewDeactivated"
+        x:Name="mainView">
+
+    <Window.Style>
+        <Style TargetType="{x:Type local:MainView}">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="Window">
+                        <Border Padding="{Binding OuterMarginSize, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}, FallbackValue=6}"
+                                BorderThickness="{Binding FlatBorderThickness, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}}">
+
+                            <Grid>
+                                <!-- Drag emphasis border -->
+                                <Border Panel.ZIndex="1" 
+                                        CornerRadius="{Binding WindowCornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}, FallbackValue=10}"
+                                        BorderThickness="{Binding IsMoving, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}, Converter={core:BoolToIntConverter}, ConverterParameter=2, FallbackValue=0}"
+                                        BorderBrush="{DynamicResource FocusedBorderBrush}"/>
+
+                                <Border x:Name="mask_brd" Background="WhiteSmoke" CornerRadius="{Binding WindowCornerRadius, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}, FallbackValue=10}"/>
+
+                                <Border>
+                                    <Border.Effect>
+                                        <DropShadowEffect ShadowDepth="0" BlurRadius="10" Opacity="0.3"/>
+                                    </Border.Effect>
+
+                                    <Border.OpacityMask>
+                                        <VisualBrush Visual="{Binding ElementName=mask_brd}"/>
+                                    </Border.OpacityMask>
+
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="*"/>
+                                        </Grid.RowDefinitions>
+
+                                        <Border Grid.Row="0" Height="{Binding ElementName=windowChrome, Path=CaptionHeight}">
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0, 0" EndPoint="1, 0">
+                                                    <GradientStop Color="White" Offset="0.0"/>
+                                                    <GradientStop Color="{DynamicResource MainBackgroundColor}" Offset="0.5"/>
+                                                    <GradientStop Color="WhiteSmoke" Offset="1.0"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+
+                                            <DockPanel>
+                                                <StackPanel DockPanel.Dock="Left" Orientation="Horizontal">
+                                                    <Button Click="OnMainIconClick" Style="{StaticResource IconButtonStyle}" Padding="5" Background="Transparent">
+                                                        <Image Source="{TemplateBinding Icon}" />
+                                                    </Button>
+
+                                                    <Viewbox Margin="4" VerticalAlignment="Center" HorizontalAlignment="Left">
+                                                        <TextBlock Text="{Binding RelativeSource={RelativeSource Mode=TemplatedParent}, Path=Title, FallbackValue='BackOffice'}" FontWeight="Thin">
+                                                            <Run Text=", version "/><Run Text="[beta]"/>
+                                                        </TextBlock>
+                                                    </Viewbox>
+                                                </StackPanel>
+
+                                                <StackPanel DockPanel.Dock="Right" Orientation="Horizontal" HorizontalAlignment="Right">
+                                                    <Button Click="OnMinimizeClick" Style="{StaticResource MinimizeIconButtonStyle}"/>
+                                                    <Button x:Name="MaximizeButton" Click="OnMaximizeClick" Style="{StaticResource MaximizeIconButtonstyle}"/>
+                                                    <Button Click="OnCloseIconClick" Style="{StaticResource CloseIconButtonStyle}"/>
+                                                </StackPanel>
+                                            </DockPanel>
+                                        </Border>
+
+                                        <Border Grid.Row="1" Height="0.5" BorderThickness="0 0.2 0 0">
+                                            <Border.BorderBrush>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="WhiteSmoke" Offset="0.0"/>
+                                                    <GradientStop Color="Gray" Offset="0.5"/>
+                                                    <GradientStop Color="Silver" Offset="1.0"/>
+                                                </LinearGradientBrush>
+                                            </Border.BorderBrush>
+
+                                            <Border.Background>
+                                                <LinearGradientBrush StartPoint="0,0" EndPoint="1,0">
+                                                    <GradientStop Color="WhiteSmoke" Offset="0.0"/>
+                                                    <GradientStop Color="Gray" Offset="0.5"/>
+                                                    <GradientStop Color="WhiteSmoke" Offset="1.0"/>
+                                                </LinearGradientBrush>
+                                            </Border.Background>
+                                        </Border>
+
+                                        <Border Grid.Row="2" Background="{DynamicResource MainBackground}" ClipToBounds="True">
+                                            <ContentPresenter Content="{TemplateBinding Content}" RecognizesAccessKey="True"/>
+                                        </Border>
+                                    </Grid>
+                                </Border>
+                            </Grid>
+                        </Border>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger Property="WindowState" Value="Maximized">
+                                <Setter TargetName="MaximizeButton" Property="Style" Value="{StaticResource RestoreIconButtonstyle}"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
+    </Window.Style>
+
+    <WindowChrome.WindowChrome>
+        <WindowChrome x:Name="windowChrome" CaptionHeight="28" GlassFrameThickness="0" ResizeBorderThickness="{Binding ResizeBorderThickness, ElementName=mainView}"/>
+    </WindowChrome.WindowChrome>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="579*"/>
+            <ColumnDefinition Width="221*"/>
+        </Grid.ColumnDefinitions>
+        
+        <ScrollViewer HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
+            <Grid>
+                <!-- Shadow border when unfocused -->
+                <Border Opacity="0.3" Panel.ZIndex="1" Visibility="{Binding IsShadow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}, Converter={StaticResource BoolToVisibilityConverter}}">
+                    <!--ToDo: Create a universal boolean attached property for the double animation without any converters 
+                              (goto the class AnimationAttachedPropertyBase.cs)-->
+                    <Border Background="Black"
+                            Visibility="{Binding IsShadow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}, Converter={StaticResource BoolToVisibilityConverter}}"
+                            core:DoubleValueForAnimationProperty.Value ="{Binding IsShadow, RelativeSource={RelativeSource Mode=FindAncestor, AncestorType={x:Type local:MainView}}, Converter={core:BoolToDoubleValueConverter}, ConverterParameter=0.3}" 
+                            Opacity="{Binding (core:ToDoubleAnimationProperty.Value), RelativeSource={RelativeSource Self}}"/>
+                </Border>
+                
+                <!-- an attempt to animate every view when appearing/disappearing-->
+                <!--<local:ContentHostControl CurrentViewModel="{Binding ActiveItem}"/>-->
+                
+                <ContentControl x:Name="ActiveItem"/>
+            </Grid>
+        </ScrollViewer>
+    </Grid>
+</Window>

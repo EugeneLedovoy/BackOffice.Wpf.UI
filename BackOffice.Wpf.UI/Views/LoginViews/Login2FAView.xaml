@@ -1,0 +1,38 @@
+﻿<UserControl x:Class="MyWpfApp.Login2FAView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:cal="http://caliburnmicro.com"
+             xmlns:core="clr-namespace:Wpf.Core;assembly=Wpf.Core"
+             xmlns:local="clr-namespace:MyWpfApp"
+             mc:Ignorable="d" 
+             d:DesignHeight="150" d:DesignWidth="350" d:Background="WhiteSmoke"
+             d:DataContext="{d:DesignInstance Type=local:Login2FAViewModel}"
+             cal:Message.Attach="[KeyUp] = [OnKeyPressed($eventArgs)]">
+
+    <Grid core:KeyboardFocusOnProperty.Value="{Binding ElementName=Code}">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock Grid.Row="0" Text="Please, enter recieved 2FA code." FontSize="16" FontWeight="Thin"/>
+
+        <TextBox Grid.Row="1" Tag="2FA Code" x:Name="Code"
+                 core:IsFocusedProperty.Value="{Binding IsCodeFocused, Mode=TwoWay}"
+                 core:IsLongProperty.Value="True"
+                 cal:Message.Attach="[KeyUp] = [OnKeyPressed($eventArgs)]" 
+                 Margin="0 20 0 10" 
+                 Style="{StaticResource WatermarkTextBoxStyle}"/>
+
+        <TextBlock Grid.Row="2" x:Name="ErrorMessage" Style="{StaticResource ErrorStyle}"/>
+
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Center" Margin="0 10 0 0">
+            <Button Content="OK" x:Name="OnOkClicked" />
+            <Button Content="Back" x:Name="OnCancelClicked" Margin="10 0 0 0"/>
+        </StackPanel>
+    </Grid>
+</UserControl>

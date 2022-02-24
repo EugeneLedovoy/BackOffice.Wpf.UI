@@ -1,0 +1,13 @@
+﻿<ResourceDictionary xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+                    xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml">
+
+    <Color x:Key="FocusedColor" R="235" G="88" B="94"/>
+    
+    <SolidColorBrush x:Key="MainBackground" Color="DarkGray"/>
+    <SolidColorBrush x:Key="MainMenuBackground" Color="Black"/>
+    <SolidColorBrush x:Key="PopupBackground" Color="LightGray"/>
+    <SolidColorBrush x:Key="MenuBackground" Color="LightGray"/>
+    <SolidColorBrush x:Key="StatusBackground" Color="Gray"/>
+    <SolidColorBrush x:Key="FocusedBackground" Color="Gray"/>
+    <SolidColorBrush x:Key="FocusedBorderBrush" Color="Black"/>
+</ResourceDictionary>
